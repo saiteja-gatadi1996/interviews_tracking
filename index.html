@@ -61,6 +61,7 @@
    padding: 0 20px 60px;
   }
 
+  /* Header */
   header {
    padding: 40px 0 32px;
    border-bottom: 1px solid var(--border);
@@ -86,7 +87,7 @@
   }
 
   h1 {
-   font-size: clamp(24px, 5vw, 40px);
+   font-size: clamp(22px, 4.5vw, 38px);
    font-weight: 800;
    line-height: 1;
    color: #fff;
@@ -103,6 +104,13 @@
    margin-top: 4px;
   }
 
+  .h-right {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-end;
+   gap: 10px;
+  }
+
   .h-date {
    font-family: 'IBM Plex Mono', monospace;
    font-size: 11px;
@@ -110,6 +118,143 @@
    text-align: right;
   }
 
+  /* Edit Mode Toggle */
+  .edit-toggle {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   cursor: pointer;
+   font-family: 'IBM Plex Mono', monospace;
+   font-size: 11px;
+   color: var(--muted);
+   user-select: none;
+  }
+
+  .toggle-track {
+   width: 36px;
+   height: 20px;
+   background: var(--surface2);
+   border: 1px solid var(--border);
+   border-radius: 20px;
+   position: relative;
+   transition: background .2s, border-color .2s;
+   flex-shrink: 0;
+  }
+
+  .toggle-thumb {
+   position: absolute;
+   top: 3px;
+   left: 3px;
+   width: 12px;
+   height: 12px;
+   border-radius: 50%;
+   background: var(--muted);
+   transition: transform .2s, background .2s;
+  }
+
+  .edit-toggle.on .toggle-track {
+   background: var(--cyan-dim);
+   border-color: var(--cyan);
+  }
+
+  .edit-toggle.on .toggle-thumb {
+   transform: translateX(16px);
+   background: var(--cyan);
+  }
+
+  .edit-toggle.on {
+   color: var(--cyan);
+  }
+
+  /* Save indicator */
+  .save-bar {
+   display: none;
+   align-items: center;
+   gap: 10px;
+   background: rgba(0, 229, 160, .08);
+   border: 1px solid rgba(0, 229, 160, .2);
+   border-radius: 8px;
+   padding: 10px 16px;
+   margin-top: 16px;
+   font-family: 'IBM Plex Mono', monospace;
+   font-size: 12px;
+   color: var(--green);
+  }
+
+  .save-bar.show {
+   display: flex;
+  }
+
+  .save-bar button {
+   margin-left: auto;
+   background: var(--green);
+   color: #000;
+   border: none;
+   border-radius: 6px;
+   padding: 6px 14px;
+   font-family: 'IBM Plex Mono', monospace;
+   font-size: 11px;
+   font-weight: 600;
+   cursor: pointer;
+   letter-spacing: .5px;
+   transition: opacity .15s;
+  }
+
+  .save-bar button:hover {
+   opacity: .85;
+  }
+
+  .save-bar .discard {
+   background: transparent;
+   color: var(--muted);
+   border: 1px solid var(--border);
+   margin-left: 0;
+  }
+
+  .save-dot {
+   width: 7px;
+   height: 7px;
+   border-radius: 50%;
+   background: var(--green);
+   animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+
+   0%,
+   100% {
+    opacity: 1;
+   }
+
+   50% {
+    opacity: .4;
+   }
+  }
+
+  /* Saved toast */
+  .toast {
+   position: fixed;
+   bottom: 24px;
+   right: 24px;
+   background: var(--surface2);
+   border: 1px solid var(--green);
+   border-radius: 10px;
+   padding: 12px 20px;
+   font-family: 'IBM Plex Mono', monospace;
+   font-size: 12px;
+   color: var(--green);
+   z-index: 999;
+   transform: translateY(80px);
+   opacity: 0;
+   transition: all .3s cubic-bezier(.4, 0, .2, 1);
+  }
+
+  .toast.show {
+   transform: translateY(0);
+   opacity: 1;
+  }
+
+  /* Stats */
   .stats {
    display: grid;
    grid-template-columns: repeat(6, 1fr);
@@ -195,6 +340,7 @@
    --ac: var(--muted);
   }
 
+  /* Progress */
   .prog-box {
    margin: 0 0 24px;
    background: var(--surface);
@@ -274,9 +420,10 @@
    flex-shrink: 0;
   }
 
+  /* Controls */
   .controls {
    display: flex;
-   gap: 12px;
+   gap: 10px;
    margin-bottom: 20px;
    flex-wrap: wrap;
    align-items: center;
@@ -318,7 +465,7 @@
    color: var(--muted);
   }
 
-  .ss {
+  .sortsel {
    background: var(--surface);
    border: 1px solid var(--border);
    border-radius: 8px;
@@ -330,6 +477,38 @@
    cursor: pointer;
   }
 
+  /* Add button */
+  .add-btn {
+   display: none;
+   align-items: center;
+   gap: 7px;
+   background: var(--cyan-dim);
+   border: 1px solid var(--cyan);
+   border-radius: 8px;
+   color: var(--cyan);
+   padding: 10px 16px;
+   font-family: 'IBM Plex Mono', monospace;
+   font-size: 12px;
+   font-weight: 600;
+   cursor: pointer;
+   letter-spacing: .5px;
+   transition: all .15s;
+   white-space: nowrap;
+  }
+
+  .add-btn:hover {
+   background: rgba(0, 212, 255, .2);
+  }
+
+  .add-btn.visible {
+   display: flex;
+  }
+
+  .add-btn svg {
+   flex-shrink: 0;
+  }
+
+  /* Table */
   .tw {
    background: var(--surface);
    border: 1px solid var(--border);
@@ -353,7 +532,7 @@
    letter-spacing: 2px;
    text-transform: uppercase;
    color: var(--muted);
-   padding: 14px 18px;
+   padding: 13px 16px;
    text-align: left;
    white-space: nowrap;
    user-select: none;
@@ -369,11 +548,28 @@
   }
 
   tbody tr:hover {
+   background: rgba(0, 212, 255, .03);
+  }
+
+  tbody tr.new-row {
    background: rgba(0, 212, 255, .04);
+   animation: rowIn .3s ease both;
+  }
+
+  @keyframes rowIn {
+   from {
+    opacity: 0;
+    transform: translateX(-8px)
+   }
+
+   to {
+    opacity: 1;
+    transform: none
+   }
   }
 
   td {
-   padding: 13px 18px;
+   padding: 12px 16px;
    font-size: 14px;
    vertical-align: middle;
   }
@@ -382,7 +578,7 @@
    font-family: 'IBM Plex Mono', monospace;
    font-size: 11px;
    color: var(--muted);
-   width: 40px;
+   width: 36px;
   }
 
   .cn {
@@ -391,7 +587,7 @@
    font-size: 14px;
   }
 
-  .ct {
+  .ctag {
    display: inline-block;
    font-family: 'IBM Plex Mono', monospace;
    font-size: 10px;
@@ -404,6 +600,33 @@
    vertical-align: middle;
   }
 
+  /* Inline edit inputs */
+  .edit-input {
+   background: var(--surface2);
+   border: 1px solid var(--cyan);
+   border-radius: 5px;
+   color: var(--text);
+   font-family: 'Barlow', sans-serif;
+   font-size: 13px;
+   font-weight: 600;
+   padding: 5px 8px;
+   outline: none;
+   width: 100%;
+   min-width: 120px;
+  }
+
+  .edit-input.tag-input {
+   font-family: 'IBM Plex Mono', monospace;
+   font-size: 11px;
+   max-width: 120px;
+  }
+
+  .edit-input.reason-input {
+   font-weight: 400;
+   min-width: 200px;
+  }
+
+  /* Badges & Status Select */
   .badge {
    display: inline-flex;
    align-items: center;
@@ -477,19 +700,25 @@
    font-size: inherit;
   }
 
+  /* Status dropdown in edit mode */
+  .status-dd {
+   background: var(--surface2);
+   border: 1px solid var(--cyan);
+   border-radius: 6px;
+   color: var(--text);
+   font-family: 'IBM Plex Mono', monospace;
+   font-size: 11px;
+   padding: 5px 8px;
+   outline: none;
+   cursor: pointer;
+  }
+
+  /* Reason cell */
   .rt {
    font-size: 13px;
    color: var(--muted);
    max-width: 340px;
    line-height: 1.45;
-   cursor: pointer;
-   border-radius: 4px;
-   padding: 2px 4px;
-   transition: background .15s;
-  }
-
-  .rt:hover {
-   background: rgba(0, 212, 255, .07);
   }
 
   .mt {
@@ -498,6 +727,33 @@
    font-family: 'IBM Plex Mono', monospace;
   }
 
+  /* Delete button */
+  .del-btn {
+   display: none;
+   background: transparent;
+   border: 1px solid var(--border);
+   border-radius: 5px;
+   color: var(--muted);
+   cursor: pointer;
+   padding: 5px 8px;
+   font-size: 12px;
+   transition: all .15s;
+   white-space: nowrap;
+  }
+
+  .del-btn:hover {
+   border-color: var(--red);
+   color: var(--red);
+   background: var(--red-dim);
+  }
+
+  body.edit-mode .del-btn {
+   display: inline-flex;
+   align-items: center;
+   gap: 4px;
+  }
+
+  /* Empty */
   .empty {
    text-align: center;
    padding: 60px 20px;
@@ -513,6 +769,7 @@
    margin-bottom: 12px;
   }
 
+  /* Mobile cards */
   .mc {
    display: none;
   }
@@ -544,7 +801,7 @@
    color: #fff;
   }
 
-  .ctag {
+  .ctag2 {
    font-family: 'IBM Plex Mono', monospace;
    font-size: 10px;
    color: var(--muted);
@@ -564,6 +821,75 @@
    font-family: 'IBM Plex Mono', monospace;
    font-size: 10px;
    color: var(--slate);
+  }
+
+  /* Edit mode body class effects */
+  body.edit-mode .rt {
+   cursor: text;
+  }
+
+  /* Add row form (inline at bottom of table) */
+  .add-row-tr td {
+   padding: 10px 16px;
+   background: rgba(0, 212, 255, .04);
+   border-top: 1px dashed var(--cyan);
+  }
+
+  .add-row-tr input,
+  .add-row-tr select {
+   background: var(--surface2);
+   border: 1px solid var(--border);
+   border-radius: 5px;
+   color: var(--text);
+   font-family: 'IBM Plex Mono', monospace;
+   font-size: 12px;
+   padding: 6px 10px;
+   outline: none;
+   transition: border-color .2s;
+  }
+
+  .add-row-tr input:focus,
+  .add-row-tr select:focus {
+   border-color: var(--cyan);
+  }
+
+  .add-row-tr input::placeholder {
+   color: var(--slate);
+  }
+
+  .confirm-add {
+   background: var(--cyan);
+   color: #000;
+   border: none;
+   border-radius: 5px;
+   padding: 6px 14px;
+   font-family: 'IBM Plex Mono', monospace;
+   font-size: 11px;
+   font-weight: 600;
+   cursor: pointer;
+   transition: opacity .15s;
+  }
+
+  .confirm-add:hover {
+   opacity: .85;
+  }
+
+  .cancel-add {
+   background: transparent;
+   color: var(--muted);
+   border: 1px solid var(--border);
+   border-radius: 5px;
+   padding: 6px 12px;
+   font-family: 'IBM Plex Mono', monospace;
+   font-size: 11px;
+   cursor: pointer;
+   margin-left: 6px;
+   transition: all .15s;
+  }
+
+  .cancel-add:hover {
+   border-color: var(--red);
+   color: var(--red);
   }
 
   @keyframes fi {
@@ -623,6 +949,10 @@
     align-items: flex-start;
    }
 
+   .h-right {
+    align-items: flex-start;
+   }
+
    .stats {
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
@@ -648,7 +978,7 @@
     gap: 8px;
    }
 
-   .ss {
+   .sortsel {
     width: 100%;
    }
   }
@@ -662,20 +992,234 @@
     font-size: 20px;
    }
   }
+
+  /* ── Password Modal ── */
+  .pwd-overlay {
+   position: fixed;
+   inset: 0;
+   background: rgba(7, 9, 14, .85);
+   backdrop-filter: blur(6px);
+   z-index: 900;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   opacity: 0;
+   pointer-events: none;
+   transition: opacity .25s;
+  }
+
+  .pwd-overlay.open {
+   opacity: 1;
+   pointer-events: all;
+  }
+
+  .pwd-box {
+   background: var(--surface);
+   border: 1px solid var(--border);
+   border-radius: 14px;
+   padding: 32px 28px;
+   width: 100%;
+   max-width: 360px;
+   position: relative;
+   transform: translateY(16px) scale(.97);
+   transition: transform .25s cubic-bezier(.4, 0, .2, 1);
+   box-shadow: 0 24px 80px rgba(0, 0, 0, .6);
+  }
+
+  .pwd-overlay.open .pwd-box {
+   transform: none;
+  }
+
+  .pwd-icon {
+   width: 42px;
+   height: 42px;
+   border-radius: 10px;
+   background: var(--cyan-dim);
+   border: 1px solid rgba(0, 212, 255, .25);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-bottom: 16px;
+   font-size: 18px;
+  }
+
+  .pwd-title {
+   font-size: 18px;
+   font-weight: 800;
+   color: #fff;
+   margin-bottom: 4px;
+  }
+
+  .pwd-sub {
+   font-family: 'IBM Plex Mono', monospace;
+   font-size: 11px;
+   color: var(--muted);
+   margin-bottom: 22px;
+   line-height: 1.5;
+  }
+
+  .pwd-label {
+   font-family: 'IBM Plex Mono', monospace;
+   font-size: 10px;
+   letter-spacing: 1.5px;
+   text-transform: uppercase;
+   color: var(--muted);
+   display: block;
+   margin-bottom: 7px;
+  }
+
+  .pwd-field-wrap {
+   position: relative;
+   margin-bottom: 6px;
+  }
+
+  .pwd-field {
+   width: 100%;
+   background: var(--surface2);
+   border: 1px solid var(--border);
+   border-radius: 8px;
+   color: var(--text);
+   font-family: 'IBM Plex Mono', monospace;
+   font-size: 14px;
+   padding: 11px 42px 11px 14px;
+   outline: none;
+   transition: border-color .2s;
+   letter-spacing: 2px;
+  }
+
+  .pwd-field:focus {
+   border-color: var(--cyan);
+  }
+
+  .pwd-field.error {
+   border-color: var(--red);
+   animation: shake .3s ease;
+  }
+
+  @keyframes shake {
+
+   0%,
+   100% {
+    transform: translateX(0)
+   }
+
+   25% {
+    transform: translateX(-6px)
+   }
+
+   75% {
+    transform: translateX(6px)
+   }
+  }
+
+  .pwd-eye {
+   position: absolute;
+   right: 12px;
+   top: 50%;
+   transform: translateY(-50%);
+   background: none;
+   border: none;
+   color: var(--muted);
+   cursor: pointer;
+   font-size: 14px;
+   padding: 2px;
+   transition: color .15s;
+  }
+
+  .pwd-eye:hover {
+   color: var(--text);
+  }
+
+  .pwd-err {
+   font-family: 'IBM Plex Mono', monospace;
+   font-size: 11px;
+   color: var(--red);
+   min-height: 16px;
+   margin-bottom: 16px;
+   display: flex;
+   align-items: center;
+   gap: 5px;
+  }
+
+  .pwd-submit {
+   width: 100%;
+   background: var(--cyan);
+   color: #000;
+   border: none;
+   border-radius: 8px;
+   padding: 12px;
+   font-family: 'IBM Plex Mono', monospace;
+   font-size: 12px;
+   font-weight: 700;
+   letter-spacing: 1px;
+   cursor: pointer;
+   transition: opacity .15s;
+  }
+
+  .pwd-submit:hover {
+   opacity: .88;
+  }
+
+  .pwd-close {
+   position: absolute;
+   top: 14px;
+   right: 14px;
+   background: none;
+   border: none;
+   color: var(--muted);
+   cursor: pointer;
+   font-size: 18px;
+   line-height: 1;
+   transition: color .15s;
+  }
+
+  .pwd-close:hover {
+   color: var(--text);
+  }
+
+  .pwd-hint {
+   text-align: center;
+   margin-top: 14px;
+   font-family: 'IBM Plex Mono', monospace;
+   font-size: 10px;
+   color: var(--slate);
+  }
  </style>
 </head>
 
 <body>
  <div class="wrap">
+
+  <!-- Toast -->
+  <div class="toast" id="toast">&#10003; Changes saved to local storage</div>
+
+  <!-- Header -->
   <header>
    <div class="h-left">
-    <div class="eyebrow">// Active Job Search 2025–2026</div>
+    <div class="eyebrow">// Active Job Search 2025&#8211;2026</div>
     <h1>Job Hunt <span>Command Center</span></h1>
     <div class="h-sub">senior &amp; lead frontend engineer &mdash; hyderabad, IN</div>
    </div>
-   <div class="h-date">Last updated<br><span id="dt"></span></div>
+   <div class="h-right">
+    <div class="h-date">Last updated<br><span id="dt"></span></div>
+    <div class="edit-toggle" id="editToggle" onclick="toggleEdit()">
+     <div class="toggle-track">
+      <div class="toggle-thumb"></div>
+     </div>
+     <span id="editLabel">Edit Mode</span>
+    </div>
+   </div>
   </header>
 
+  <!-- Save bar -->
+  <div class="save-bar" id="saveBar">
+   <div class="save-dot"></div>
+   <span>Unsaved changes</span>
+   <button class="discard" onclick="discardChanges()">Discard</button>
+   <button onclick="saveChanges()">&#10003; Save to Storage</button>
+  </div>
+
+  <!-- Stats -->
   <div class="stats">
    <div class="sc active" data-f="all" onclick="fil('all',this)">
     <div class="sc-label">Total</div>
@@ -703,6 +1247,7 @@
    </div>
   </div>
 
+  <!-- Progress -->
   <div class="prog-box">
    <div class="prog-top"><span>Application Pipeline</span><span id="pct">0% response rate</span></div>
    <div class="prog-bar">
@@ -735,19 +1280,27 @@
    </div>
   </div>
 
+  <!-- Controls -->
   <div class="controls">
    <div class="sw">
     <span class="si-icon">&#8981;</span>
     <input class="si" type="text" placeholder="Search company, stack, notes..." oninput="doSearch(this.value)" />
    </div>
-   <select class="ss" onchange="doSort(this.value)">
+   <select class="sortsel" onchange="doSort(this.value)">
     <option value="default">Sort: Default</option>
     <option value="az">A &rarr; Z</option>
     <option value="za">Z &rarr; A</option>
     <option value="status">By Status</option>
    </select>
+   <button class="add-btn" id="addBtn" onclick="showAddRow()">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+     <path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+    </svg>
+    Add Company
+   </button>
   </div>
 
+  <!-- Table -->
   <div class="tw">
    <table>
     <thead>
@@ -756,6 +1309,8 @@
       <th>Company</th>
       <th>Stack / Role</th>
       <th>Status</th>
+      <th>Reason / Notes</th>
+      <th id="actions-th" style="display:none"></th>
      </tr>
     </thead>
     <tbody id="tb"></tbody>
@@ -766,6 +1321,8 @@
  </div>
 
  <script>
+  const LS_KEY = 'jobtracker_v2';
+
   const ST = {
    selected: { cls: 'b-sel', label: 'Selected' },
    rejected: { cls: 'b-rej', label: 'Rejected' },
@@ -776,7 +1333,7 @@
    unknown: { cls: 'b-unk', label: 'Unknown ??' },
   };
 
-  const RAW = [
+  const DEFAULTS = [
    { c: "Sonata", t: "", s: "selected", r: "Offer received — in process" },
    { c: "Concentrix", t: "", s: "selected", r: "Offer received — in process" },
    { c: "CUBIC Transportation", t: "MERN", s: "rejected", r: "Entire interview was writing Node.js APIs — not aligned with frontend role" },
@@ -854,16 +1411,131 @@
    { c: "Evernorth Health", t: "", s: "pending", r: "" },
   ];
 
-  let data = RAW.map(j => ({ ...j }));
-  let aFil = 'all', srch = '', srt = 'default';
+  // ── State ──────────────────────────────────────────────────────────────────
+  function loadData() {
+   try {
+    const saved = localStorage.getItem(LS_KEY);
+    if (saved) return JSON.parse(saved);
+   } catch (e) { }
+   return DEFAULTS.map(j => ({ ...j }));
+  }
 
+  let data = loadData();
+  let savedSnapshot = JSON.stringify(data);
+  let aFil = 'all', srch = '', srt = 'default';
+  let editMode = false;
+  let isDirty = false;
+  let addRowOpen = false;
+
+  // ── Init ───────────────────────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', () => {
-   document.getElementById('dt').textContent = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
-   updStats(); render();
+   document.getElementById('dt').textContent =
+    new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+   updStats();
+   render();
   });
 
+  // ── Edit Mode (password-gated — see bottom of file) ───────────────────────
+  function markDirty() {
+   if (!isDirty) {
+    isDirty = true;
+    document.getElementById('saveBar').classList.add('show');
+   }
+  }
+
+  function saveChanges() {
+   try {
+    localStorage.setItem(LS_KEY, JSON.stringify(data));
+    savedSnapshot = JSON.stringify(data);
+    isDirty = false;
+    document.getElementById('saveBar').classList.remove('show');
+    showToast('&#10003; Changes saved to local storage');
+   } catch (e) {
+    showToast('&#9888; Could not save — storage unavailable');
+   }
+  }
+
+  function discardChanges() {
+   data = JSON.parse(savedSnapshot);
+   isDirty = false;
+   document.getElementById('saveBar').classList.remove('show');
+   if (editMode) { exitEditMode(); }
+   updStats(); render();
+  }
+
+  function showToast(msg) {
+   const t = document.getElementById('toast');
+   t.innerHTML = msg;
+   t.classList.add('show');
+   setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  // ── Add Row ────────────────────────────────────────────────────────────────
+  function showAddRow() {
+   if (addRowOpen) return;
+   addRowOpen = true;
+   const stOpts = Object.entries(ST).map(([k, v]) => `<option value="${k}">${v.label}</option>`).join('');
+   const tr = document.createElement('tr');
+   tr.className = 'add-row-tr';
+   tr.id = 'add-row';
+   tr.innerHTML = `
+    <td class="tn">&#43;</td>
+    <td><input id="nr-company" placeholder="Company name" style="width:100%;background:var(--surface2);border:1px solid var(--cyan);border-radius:5px;color:var(--text);font-family:'Barlow',sans-serif;font-weight:600;font-size:13px;padding:6px 9px;outline:none;" /></td>
+    <td><input id="nr-tag" placeholder="MERN / Stack / Role" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:11px;padding:6px 9px;outline:none;" /></td>
+    <td><select id="nr-status" style="background:var(--surface2);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:11px;padding:6px 9px;outline:none;cursor:pointer;">${stOpts}</select></td>
+    <td><input id="nr-reason" placeholder="Notes / reason..." style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'Barlow',sans-serif;font-size:13px;padding:6px 9px;outline:none;" /></td>
+    <td><button class="confirm-add" onclick="confirmAdd()">Add</button><button class="cancel-add" onclick="closeAddRow()">Cancel</button></td>`;
+   document.getElementById('tb').appendChild(tr);
+   setTimeout(() => document.getElementById('nr-company').focus(), 50);
+
+   // Enter key support
+   tr.addEventListener('keydown', e => { if (e.key === 'Enter') confirmAdd(); if (e.key === 'Escape') closeAddRow(); });
+  }
+
+  function confirmAdd() {
+   const company = document.getElementById('nr-company').value.trim();
+   if (!company) { document.getElementById('nr-company').style.borderColor = 'var(--red)'; return; }
+   const entry = {
+    c: company,
+    t: document.getElementById('nr-tag').value.trim(),
+    s: document.getElementById('nr-status').value,
+    r: document.getElementById('nr-reason').value.trim(),
+   };
+   data.push(entry);
+   markDirty();
+   closeAddRow();
+   updStats();
+   render();
+   showToast('&#43; ' + company + ' added — remember to save!');
+  }
+
+  function closeAddRow() {
+   addRowOpen = false;
+   const row = document.getElementById('add-row');
+   if (row) row.remove();
+  }
+
+  // ── Delete ─────────────────────────────────────────────────────────────────
+  function delRow(idx) {
+   if (!confirm('Remove ' + data[idx].c + ' from tracker?')) return;
+   data.splice(idx, 1);
+   markDirty();
+   updStats();
+   render();
+  }
+
+  // ── Status & Reason changes ────────────────────────────────────────────────
+  function chg(i, v) { data[i].s = v; markDirty(); updStats(); render(); }
+  function sav(i, el) {
+   const val = el.innerText.trim();
+   if (data[i].r !== val) { data[i].r = val; markDirty(); }
+  }
+  function chgField(i, field, val) { data[i][field] = val; markDirty(); }
+
+  // ── Stats ──────────────────────────────────────────────────────────────────
   function updStats() {
-   const cnt = {}; Object.keys(ST).forEach(k => cnt[k] = 0);
+   const cnt = {};
+   Object.keys(ST).forEach(k => cnt[k] = 0);
    data.forEach(j => cnt[j.s] = (cnt[j.s] || 0) + 1);
    const tot = data.length;
    document.getElementById('sa').textContent = tot;
@@ -883,8 +1555,9 @@
    document.getElementById('ppen').style.width = pct('pending');
   }
 
+  // ── Filter / Search / Sort ─────────────────────────────────────────────────
   function getFil() {
-   let d = [...data];
+   let d = data.map((j, i) => ({ ...j, _oi: i }));
    if (aFil !== 'all') {
     if (aFil === 'pending') d = d.filter(j => j.s === 'pending' || j.s === 'unknown');
     else if (aFil === 'ghosted') d = d.filter(j => j.s === 'ghosted');
@@ -902,44 +1575,194 @@
    const tb = document.getElementById('tb');
    const mc = document.getElementById('mc');
    const emp = document.getElementById('emp');
-   tb.innerHTML = ''; mc.innerHTML = '';
+
+   // preserve add-row if open
+   const addRowEl = document.getElementById('add-row');
+   tb.innerHTML = '';
+   mc.innerHTML = '';
    emp.style.display = fil.length === 0 ? 'block' : 'none';
-   const opts = () => Object.entries(ST).map(([k, v]) => `<option value="${k}">${v.label}</option>`).join('');
+
+   const stOpts = (cur) => Object.entries(ST).map(([k, v]) =>
+    `<option value="${k}"${k === cur ? ' selected' : ''} >${v.label}</option>`).join('');
 
    fil.forEach((job, i) => {
+    const oi = job._oi;
     const cfg = ST[job.s] || ST.pending;
-    const oi = data.indexOf(job);
-    const selOpts = Object.entries(ST).map(([k, v]) => `<option value="${k}"${k === job.s ? ' selected' : ''}>${v.label}</option>`).join('');
 
+    // ── Desktop row ──
     const tr = document.createElement('tr');
+
+    // Company cell
+    const companyCell = editMode
+     ? `<input class="edit-input" value="${job.c.replace(/"/g, '&quot;')}" onchange="chgField(${oi},'c',this.value)" oninput="markDirty()" />`
+     : `<div class="cn">${job.c}${job.t ? `<span class="ctag">${job.t}</span>` : ''}</div>`;
+
+    const tagCell = editMode
+     ? `<input class="edit-input tag-input" value="${job.t}" placeholder="Stack/Role" onchange="chgField(${oi},'t',this.value)" oninput="markDirty()" />`
+     : `${job.t || '<span style="color:var(--slate);font-size:12px">—</span>'}`;
+
+    // Status cell
+    const statusCell = editMode
+     ? `<select class="status-dd" onchange="chg(${oi},this.value)">${stOpts(job.s)}</select>`
+     : `<span class="badge ${cfg.cls}">${cfg.label}</span>`;
+
+    // Reason cell
+    const reasonCell = editMode
+     ? `<div class="rt" contenteditable="true" onblur="sav(${oi},this)" oninput="markDirty()">${job.r || ''}</div>`
+     : `<div class="rt">${job.r || '<span class="mt">—</span>'}</div>`;
+
+    // Actions cell
+    const actCell = editMode
+     ? `<td><button class="del-btn" onclick="delRow(${oi})"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Remove</button></td>`
+     : '';
+
     tr.innerHTML =
-     '<td class="tn">' + String(i + 1).padStart(2, '0') + '</td>' +
-     '<td><div class="cn">' + job.c + (job.t ? '<span class="ct">' + job.t + '</span>' : '') + '</div></td>' +
-     '<td><select class="stsel badge ' + cfg.cls + '" onchange="chg(' + oi + ',this.value)">' + selOpts + '</select></td>' +
-     '<td><div class="rt" contenteditable="true" onblur="sav(' + oi + ',this)">' + (job.r || '<span class="mt">— click to add note —</span>') + '</div></td>';
+     `<td class="tn">${String(i + 1).padStart(2, '0')}</td>` +
+     `<td>${companyCell}</td>` +
+     `<td>${tagCell}</td>` +
+     `<td>${statusCell}</td>` +
+     `<td>${reasonCell}</td>` +
+     actCell;
+
     tb.appendChild(tr);
 
+    // ── Mobile card ──
     const card = document.createElement('div');
     card.className = 'jc';
     card.innerHTML =
-     '<div class="ct2">' +
-     '<div><div class="cc">' + job.c + '</div>' + (job.t ? '<div class="ctag">' + job.t + '</div>' : '') + '</div>' +
-     '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">' +
-     '<select class="stsel badge ' + cfg.cls + '" onchange="chg(' + oi + ',this.value)">' + selOpts + '</select>' +
-     '<div class="cnum">#' + String(i + 1).padStart(2, '0') + '</div>' +
-     '</div>' +
-     '</div>' +
-     (job.r ? '<div class="cr">' + job.r + '</div>' : '');
+     `<div class="ct2">` +
+     `<div><div class="cc">${job.c}</div>${job.t ? `<div class="ctag2">${job.t}</div>` : ''}</div>` +
+     `<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">` +
+     (editMode
+      ? `<select class="stsel badge ${cfg.cls}" onchange="chg(${oi},this.value)">${stOpts(job.s)}</select>`
+      : `<span class="badge ${cfg.cls}">${cfg.label}</span>`) +
+     `<div class="cnum">#${String(i + 1).padStart(2, '0')}</div>` +
+     `</div>` +
+     `</div>` +
+     (job.r ? `<div class="cr">${job.r}</div>` : '') +
+     (editMode ? `<button class="del-btn" style="display:inline-flex;margin-top:10px" onclick="delRow(${oi})">&#10005; Remove</button>` : '');
     mc.appendChild(card);
    });
+
+   // re-append add row if it was open
+   if (addRowOpen && addRowEl) tb.appendChild(addRowEl);
   }
 
-  function chg(i, v) { data[i].s = v; updStats(); render(); }
-  function sav(i, el) { data[i].r = el.innerText.trim(); }
   function fil(f, card) { aFil = f; document.querySelectorAll('.sc').forEach(c => c.classList.remove('active')); card.classList.add('active'); render(); }
   function doSearch(v) { srch = v.trim(); render(); }
   function doSort(v) { srt = v; render(); }
+
+  // ── Password Gate ──────────────────────────────────────────────────────────
+  const EDIT_PASSWORD = 'Artifical@1996_new'; // first name + year React was started
+
+  function toggleEdit() {
+   if (editMode) {
+    // Turning OFF — handle dirty state
+    if (isDirty) {
+     if (!confirm('You have unsaved changes. Discard them and exit edit mode?')) return;
+     discardChanges();
+     return;
+    }
+    exitEditMode();
+    return;
+   }
+   // Turning ON — ask for password
+   openPwdModal();
+  }
+
+  function openPwdModal() {
+   const overlay = document.getElementById('pwdOverlay');
+   overlay.classList.add('open');
+   setTimeout(() => document.getElementById('pwdInput').focus(), 200);
+  }
+
+  function closePwdModal() {
+   const overlay = document.getElementById('pwdOverlay');
+   overlay.classList.remove('open');
+   document.getElementById('pwdInput').value = '';
+   document.getElementById('pwdErr').textContent = '';
+   document.getElementById('pwdInput').classList.remove('error');
+  }
+
+  function togglePwdVis() {
+   const inp = document.getElementById('pwdInput');
+   const eye = document.getElementById('pwdEye');
+   if (inp.type === 'password') { inp.type = 'text'; eye.innerHTML = '&#128584;'; }
+   else { inp.type = 'password'; eye.innerHTML = '&#128065;'; }
+   inp.focus();
+  }
+
+  function checkPwd() {
+   const val = document.getElementById('pwdInput').value;
+   const errEl = document.getElementById('pwdErr');
+   if (val === EDIT_PASSWORD) {
+    closePwdModal();
+    enterEditMode();
+   } else {
+    document.getElementById('pwdInput').classList.add('error');
+    errEl.innerHTML = '&#9888; Incorrect password. Try again.';
+    document.getElementById('pwdInput').value = '';
+    document.getElementById('pwdInput').focus();
+   }
+  }
+
+  function enterEditMode() {
+   editMode = true;
+   const toggle = document.getElementById('editToggle');
+   toggle.classList.add('on');
+   document.getElementById('editLabel').textContent = 'Editing';
+   document.body.classList.add('edit-mode');
+   document.getElementById('addBtn').classList.add('visible');
+   document.getElementById('actions-th').style.display = '';
+   showToast('&#128275; Edit mode unlocked');
+   render();
+  }
+
+  function exitEditMode() {
+   editMode = false;
+   const toggle = document.getElementById('editToggle');
+   toggle.classList.remove('on');
+   document.getElementById('editLabel').textContent = 'Edit Mode';
+   document.body.classList.remove('edit-mode');
+   document.getElementById('addBtn').classList.remove('visible');
+   document.getElementById('actions-th').style.display = 'none';
+   if (addRowOpen) closeAddRow();
+   render();
+  }
+
+  // Close modal on overlay backdrop click
+  document.addEventListener('DOMContentLoaded', () => {
+   document.getElementById('pwdOverlay').addEventListener('click', function (e) {
+    if (e.target === this) closePwdModal();
+   });
+   // ESC closes modal
+   document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && document.getElementById('pwdOverlay').classList.contains('open')) {
+     closePwdModal();
+    }
+   });
+  });
  </script>
+
+ <!-- Password Modal -->
+ <div class="pwd-overlay" id="pwdOverlay">
+  <div class="pwd-box">
+   <button class="pwd-close" onclick="closePwdModal()" title="Cancel">&#10005;</button>
+   <div class="pwd-icon">&#128274;</div>
+   <div class="pwd-title">Edit Mode</div>
+   <div class="pwd-sub">This tracker is shared in view&#8209;only mode.<br>Enter the password to unlock editing.</div>
+   <label class="pwd-label" for="pwdInput">Password</label>
+   <div class="pwd-field-wrap">
+    <input class="pwd-field" id="pwdInput" type="password" placeholder="••••••••"
+     onkeydown="if(event.key==='Enter')checkPwd(); this.classList.remove('error');" autocomplete="current-password" />
+    <button class="pwd-eye" id="pwdEye" onclick="togglePwdVis()" tabindex="-1">&#128065;</button>
+   </div>
+   <div class="pwd-err" id="pwdErr"></div>
+   <button class="pwd-submit" onclick="checkPwd()">&#128275; Unlock Edit Mode</button>
+   <div class="pwd-hint">Hint: your first name + year you started React</div>
+  </div>
+ </div>
+
 </body>
 
 </html>
